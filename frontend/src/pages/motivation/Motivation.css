@@ -1,0 +1,23 @@
+.motivation {
+    width: 980px;
+    margin: auto;
+    min-height: 80vh;
+}
+
+.motivation h1,
+.motivation h2 {
+    font-weight: 300;
+}
+
+.motivation p {
+    font-size: 14px;
+    text-align: justify;
+}
+
+.motivation a {
+    color: black;
+}
+
+.motivation a:hover {
+    color: #FF425F;
+}

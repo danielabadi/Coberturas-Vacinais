@@ -7,7 +7,7 @@ function Header() {
         <div className="header" role="navigation">
             <NavLink className={({ isActive }) => isActive ? 'link--active' : 'link'}
                 to='/' tabIndex={1} role="menuitem">
-                Apresentação
+                Motivação
             </NavLink>
             <NavLink className={({ isActive }) => isActive ? 'link--active' : 'link'}
                 to='/' tabIndex={1} role="menuitem">

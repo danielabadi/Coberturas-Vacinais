@@ -1,0 +1,42 @@
+.about_idhm {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+    left: 0;
+    bottom: -10px;
+}
+
+.about_idhm>p {
+    color: whitesmoke;
+    font-size: 12px;
+    margin: 0;
+}
+
+.about_idhm_hover {
+    height: auto;
+    font-size: 14PX;
+    text-align: left;
+    border-radius: 8px;
+    background-color: whitesmoke;
+    padding: 20px;
+    position: absolute;
+    z-index: 9999;
+    display: none;
+    bottom: 18px;
+    left: -10px;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+}
+
+.about_idhm_hover>p {
+    margin-top: 0px;
+}
+
+.about_idhm:hover .about_idhm_hover {
+    display: block;
+}
+
+.about_idhm_icone {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+}

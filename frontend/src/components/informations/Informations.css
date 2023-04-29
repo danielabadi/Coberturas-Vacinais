@@ -1,0 +1,33 @@
+.info {
+    width: 500px;
+    height: 500px;
+    background-color: whitesmoke;
+}
+
+.info__gerais {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    justify-content: space-between;
+    text-align: left;
+    margin-left: 50px;
+}
+
+.info>h1{
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 60px;
+    text-align: center;
+}
+
+.info__gerais>div>h3 {
+    color: #FF425F;
+    margin: 0px;
+    font-size: 14px;
+}
+
+.info__gerais>div>p {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 18px;
+    margin-top: 10px;
+}

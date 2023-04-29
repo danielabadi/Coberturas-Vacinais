@@ -1,0 +1,35 @@
+.idhm {
+    width: auto;
+    margin: 0px 50px 0px 50px;
+}
+
+.idhm__principal>h3,
+.idhm__secundarios--lengeda {
+    color: #FF425F;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.idhm__principal--lengeda {
+    color: #FF425F;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.idhm__secundarios {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    justify-content: space-between;
+}
+
+.idhm__secundarios--valor,
+.idhm__principal--valor {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 18px;
+    margin-top: 10px;
+    text-align: center;
+}

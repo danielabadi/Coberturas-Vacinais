@@ -14,7 +14,7 @@ function Header() {
                 Municípios
             </NavLink>
             <NavLink className={({ isActive }) => isActive ? 'link--active' : 'link'}
-                to='/' tabIndex={1} role="menuitem">
+                to='/states' tabIndex={1} role="menuitem">
                 Regiões
             </NavLink>
             <NavLink className={({ isActive }) => isActive ? 'link--active' : 'link'}

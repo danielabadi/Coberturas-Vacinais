@@ -1,0 +1,31 @@
+const statesNames = [
+    {nome: "ACRE", cod: "12"},
+    {nome: "ALAGOAS", cod: "27"},
+    {nome: "AMAPÁ", cod: "16"},
+    {nome: "AMAZONAS", cod: "13"},
+    {nome: "BAHIA", cod: "29"},
+    {nome: "CEARÁ", cod: "23"},
+    {nome: "ESPÍRITO SANTO", cod: "32"},
+    {nome: "GOIÁS", cod: "52"},
+    {nome: "MARANHÃO", cod: "21"},
+    {nome: "MATO GROSSO", cod: "51"},
+    {nome: "MATO GROSSO DO SUL", cod: "50"},
+    {nome: "MINAS GERAIS", cod: "31"},
+    {nome: "PARÁ", cod: "15"},
+    {nome: "PARAÍBA", cod: "25"},
+    {nome: "PARANÁ", cod: "41"},
+    {nome: "PERNAMBUCO", cod: "26"},
+    {nome: "PIAUÍ", cod: "22"},
+    {nome: "RIO DE JANEIRO", cod: "33"},
+    {nome: "RIO GRANDE DO NORTE", cod: "24"},
+    {nome: "RIO GRANDE DO SUL", cod: "43"},
+    {nome: "RONDÔNIA", cod: "11"},
+    {nome: "RORAIMA", cod: "14"},
+    {nome: "SANTA CATARINA", cod: "42"},
+    {nome: "SÃO PAULO", cod: "35"},
+    {nome: "SERGIPE", cod: "28"},
+    {nome: "TOCANTINS", cod: "17"},
+    {nome: "DISTRITO FEDERAL", cod: "53"}
+]
+
+export default statesNames;

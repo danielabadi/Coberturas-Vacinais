@@ -1,6 +1,6 @@
 import React from "react";
-import * as d3 from 'd3';
-import "./Multiples.css"
+import * as d3 from "d3";
+import "./Multiples.css";
 
 function Multiples(props) {
     const [vaccineData, setVaccineData] = React.useState(null);
@@ -18,8 +18,8 @@ function Multiples(props) {
     //Read the data
     function smallMultiples(data) {
         // group the data: I want to draw one line per group
-        const sumstat = d3.group(data, d => d.regiao) // nest function allows to group the calculation per level of a factor
-        const years = Array.from(new Set(vaccineData.flatMap(data => [data.ano])))
+        const sumstat = d3.group(data, d => d.regiao); // nest function allows to group the calculation per level of a factor
+        const years = Array.from(new Set(vaccineData.flatMap(data => [data.ano])));
 
         // Add an svg element for each group. The will be one beside each other and will go on the next row when no more room available
         const svg = d3.select("#my_dataviz")
@@ -50,28 +50,27 @@ function Multiples(props) {
             .range([height, 0]);
 
         svg.append("g")
-            .attr('class', 'y axis')
+            .attr("class", "y axis")
             .call(d3.axisLeft(y).ticks(4).tickSizeInner(-width))
-            .call(g => g.select('.domain').remove())
-            .call(g => g.append('text')
-                .attr('x', -margin.left)
-                .attr('y', -5)
-                .attr('fill', 'currentColor')
-                .attr('text-anchor', 'start')
-                .text('↑ Cobertura (%)'));;
+            .call(g => g.select(".domain").remove())
+            .call(g => g.append("text")
+                .attr("x", -margin.left)
+                .attr("y", -5)
+                .attr("fill", "currentColor")
+                .attr("text-anchor", "start")
+                .text("↑ Cobertura (%)"));
 
         // Draw the line
-        svg
-            .append("path")
+        svg.append("path")
             .attr("fill", "none")
-            .attr("stroke", '#3C447E')
+            .attr("stroke", "#3C447E")
             .attr("stroke-width", 1.9)
             .attr("d", function (d) {
                 return d3.line()
                     .x(function (d) { return x(d.ano); })
                     .y(function (d) { return y(+d.cobertura); })
-                    (d[1])
-            })
+                    (d[1]);
+            });
 
         // Add titles
         svg.append("text")
@@ -85,6 +84,7 @@ function Multiples(props) {
     React.useEffect(() => {
         async function fetchData() {
             let url = `http://localhost:5000/api/v1/regions/cobertura?vaccine=${props.vacina}`;
+
             try {
                 const response = await fetch(url);
                 const json = await response.json();
@@ -93,19 +93,20 @@ function Multiples(props) {
                 console.log("error", error);
             }
         };
+
         fetchData();
     }, [props]);
 
     React.useEffect(() => {
         if (vaccineData != null) {
-            d3.select('#my_dataviz').selectAll('*').remove();
+            d3.select("#my_dataviz").selectAll("*").remove();
             smallMultiples(vaccineData);
         }
     }, [vaccineData]);
 
     return (
         <div className="chartMultiplos" id="my_dataviz"></div>
-    )
+    );
 }
 
 export default Multiples;

@@ -3,16 +3,16 @@
     height: 450px;
     background-color: whitesmoke;
     margin-top: 30px;
-  }
-  
-  .InfoEstados_geral {
+}
+
+.InfoEstados_geral {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     text-align: left;
-  }
-  
-  .InfoEstados h1 {
+}
+
+.InfoEstados h1 {
     width: 80%;
     margin: auto;
     margin-bottom: 10px;
@@ -20,16 +20,16 @@
     font-weight: 600;
     text-align: center;
     margin-top: 35px;
-  }
-  
-  .InfoEstados_geral p {
+}
+
+.InfoEstados_geral p {
     margin: 0px;
     font-size: 20px;
     font-weight: bold;
-  }
-  
-  .InfoEstados_geral h3 {
+}
+
+.InfoEstados_geral h3 {
     color: #FF425F;
     margin: 0px;
     font-size: 16px;
-  }
+}

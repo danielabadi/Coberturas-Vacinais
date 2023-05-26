@@ -4,16 +4,16 @@
     stroke-width: 1;
     shape-rendering: crispEdges;
     opacity: 0.2;
-  }
-  
-  .visualizacao_cobertura {
+}
+
+.visualizacao_cobertura {
     display: inline-flex;
     flex-direction: column;
     justify-content: center;
-  }
-  
-  .select_imunizantes {
+}
+
+.select_imunizantes {
     max-width: 800px;
     margin-bottom: 10px;
     margin-top: 10px;
-  }
+}

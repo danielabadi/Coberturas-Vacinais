@@ -1,7 +1,7 @@
 import React from "react";
 import "./States.css";
 import ReactSlider from "react-slider";
-import Select from 'react-select';
+import Select from "react-select";
 import vaccines from "../../assets/data/Vaccines";
 import Ranking from "../../components/charts/ranking/Ranking";
 import MapState from "../../components/maps/MapStates";
@@ -11,12 +11,12 @@ import TableVaccines from "../../components/tableVaccines/TableVaccines";
 
 function States() {
     const [vaccine, setVaccine] = React.useState(1);
-    const [range, setRange] = React.useState(['2010', '2021']);
-    const [prop, setProp] = React.useState({ vaccine: 1, year: 2021 })
+    const [range, setRange] = React.useState(["2010", "2021"]);
+    const [prop, setProp] = React.useState({ vaccine: 1, year: 2021 });
 
     React.useEffect(() => {
         setRange([vaccines[vaccine - 1].anos[0], vaccines[vaccine - 1].anos.at(-1)]);
-        setProp({ vaccine: vaccine, year: vaccines[vaccine - 1].anos.at(-1) })
+        setProp({ vaccine: vaccine, year: vaccines[vaccine - 1].anos.at(-1) });
     }, [vaccine]);
 
     function handleChange(event) {
@@ -72,7 +72,7 @@ function States() {
             <div className="estado__chart--disclaimer">
                 <p>
                     Embora os dados sobre a cobertura vacinal apresentados nos gráficos acima provenham do banco de dados do Sistema Único de Saúde, o DataSUS, é importante ressaltar que as
-                    estatísticas oficiais nem sempre correspondem à realidade. De acordo com uma <a href="https://www.bbc.com/portuguese/brasil-62980100" target='_blank' rel="noreferrer">reportagem
+                    estatísticas oficiais nem sempre correspondem à realidade. De acordo com uma <a href="https://www.bbc.com/portuguese/brasil-62980100" target="_blank" rel="noreferrer">reportagem
                         da BBC</a> , que entrevistou especialistas e gestores de saúde, há uma discrepância
                     entre os números oficiais e a situação local. O problema, segundo identificado pelos gestores de saúde locais, deve-se à burocracia excessiva, à falta de pessoal adequado
                     e à conectividade inadequada ou ao acesso a sistemas de informação mais modernos e conectados.

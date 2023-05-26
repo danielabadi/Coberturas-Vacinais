@@ -2,51 +2,51 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-  
-  .page_estado_principal {
+}
+
+.page_estado_principal {
     background-color: #3C447E;
-  }
-  
-  .page_estado_principal_select {
+}
+
+.page_estado_principal_select {
     width: calc(30vw);
     margin-left: auto;
     margin-right: auto;
     margin-top: 25px;
     margin-bottom: 25px;
-  }
-  
-  .page_estado_principal_select>p {
+}
+
+.page_estado_principal_select>p {
     margin: 0;
     margin-bottom: -10px;
     font-weight: bold;
     color: white;
     opacity: 0.7;
-  }
-  
-  .page_estado_select_imunizante {
+}
+
+.page_estado_select_imunizante {
     margin-bottom: 10px;
     margin-top: 10px;
     z-index: 9999;
-  }
-  
-  .page_estado_principal_mapa {
+}
+
+.page_estado_principal_mapa {
     display: flex;
     flex-direction: row;
     justify-content: center;
-  }
-  
-  .page_estado_graficos {
+}
+
+.page_estado_graficos {
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
-  }
-  
-  .page_estado_graficos>h1 {
+}
+
+.page_estado_graficos>h1 {
     text-align: center;
-  }
-  
-  .page_estado_graficos>h6 {
+}
+
+.page_estado_graficos>h6 {
     padding: 0px 30px;
     color: #6B6B6B;
     font-size: 12px;
@@ -55,31 +55,31 @@
     line-height: 14px;
     text-align: left;
     margin: 0;
-  }
-  
-  .estado__chart--disclaimer {
+}
+
+.estado__chart--disclaimer {
     margin: auto;
     max-width: 1000px;
     margin-bottom: 20px;
     margin-top: 10px;
-  }
-  
-  /* Estilização do mapa e legenda*/
-  .mapa_estado {
+}
+
+/* Estilização do mapa e legenda*/
+.mapa_estado {
     height: 480px;
     width: 480px;
-  }
-  
-  .mapa_estado_popup {
+}
+
+.mapa_estado_popup {
     background-color: transparent !important;
     font-size: 12px;
     font-weight: bold;
     padding: 0 !important;
     border: 0 !important;
     box-shadow: none !important;
-  }
-  
-  .mapa_estado_info {
+}
+
+.mapa_estado_info {
     width: auto;
     height: auto;
     padding: 6px 8px;
@@ -89,40 +89,48 @@
     border-radius: 5px;
     line-height: 18px;
     color: #555;
-  }
-  
-  .mapa_estado_info>h4 {
+}
+
+.mapa_estado_info>h4 {
     margin: 0 0 5px;
     color: #777;
-  }
-  
-  .mapa_estado_info>p {
+}
+
+.mapa_estado_info>p {
     margin: 0;
-  }
-  
-  .mapa_estado_info>i {
+}
+
+.mapa_estado_info>i {
     width: 18px;
     height: 18px;
     float: left;
     margin-right: 8px;
     opacity: 0.7;
-  }
-  
-  #mapa_estado {
+}
+
+#mapa_estado {
     background-color: transparent;
-    /* background-color: whitesmoke; */
-  }
-  
-  /*Estilização do slider abaixo*/
-  
-  .page_estado_horizontal_slider {
+}
+
+.info_interacao {
+    padding: 0px 6px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: #777;
+}
+
+/*Estilização do slider abaixo*/
+.page_estado_horizontal_slider {
     width: 100%;
     max-width: 460px;
     height: 70px;
     margin: auto;
-  }
-  
-  .page_estado_slider_thumb {
+}
+
+.page_estado_slider_thumb {
     cursor: pointer;
     position: absolute;
     z-index: 100;
@@ -131,42 +139,42 @@
     border-radius: 100%;
     display: block;
     box-shadow: 0 0 2px 0 rgb(0 0 0 / 44%);
-  }
-  
-  .page_estado_slider_track {
+}
+
+.page_estado_slider_track {
     position: relative;
     background: #ddd;
-  }
-  
-  .page_estado_slider_track.page_estado_slider_track-0 {
+}
+
+.page_estado_slider_track.page_estado_slider_track-0 {
     background: #ddd;
-  }
-  
-  .page_estado_horizontal_slider .page_estado_slider_track {
+}
+
+.page_estado_horizontal_slider .page_estado_slider_track {
     top: 20px;
     height: 4px;
-  }
-  
-  .page_estado_horizontal_slider .page_estado_slider_thumb {
+}
+
+.page_estado_horizontal_slider .page_estado_slider_thumb {
     top: 12px;
     width: 10px;
     outline: none;
     height: 10px;
     line-height: 38px;
-  }
-  
-  .page_estado_slider_mark {
+}
+
+.page_estado_slider_mark {
     color: white;
     cursor: pointer;
     top: 35px;
     font-size: 12px;
-  }
-  
-  .mark {
+}
+
+.mark {
     width: 2px;
     height: 8px;
     background-color: #aaa;
     bottom: 25px;
     left: 9px;
     position: absolute;
-  }
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import * as d3 from 'd3';
+import * as d3 from "d3";
 import "./Ranking.css";
 
 function Ranking(props) {
@@ -12,7 +12,7 @@ function Ranking(props) {
         padding = 25,
         bumpRadius = 13
     } = {}) {
-        const width = 12*80;
+        const width = 12 * 80;
         let seq = (start, length) => Array.apply(null, { length: length }).map((d, i) => i + start);
         const bx = d3.scalePoint()
             .domain(seq(0, years.length))//mudar pra quantidade de anos
@@ -20,7 +20,7 @@ function Ranking(props) {
 
         const by = d3.scalePoint()
             .domain(seq(0, states.length))//mudar pra numero de estados
-            .range([margin.top, height - margin.bottom - padding])
+            .range([margin.top, height - margin.bottom - padding]);
 
         const color = d3.scaleOrdinal(d3.schemeTableau10)
             .domain(seq(0, years.length)); //mudar pra quantidade de anos
@@ -30,7 +30,7 @@ function Ranking(props) {
             .range([5, bumpRadius * 2 + 2, 2]);
 
         const title = g => g.append("title")
-            .text((d, i) => `${d.state} - ${years[i]}\nRank: ${d.cobertura.rank + 1}\nCobertura: ${d.cobertura.cobertura}`)
+            .text((d, i) => `${d.state} - ${years[i]}\nCobertura: ${d.cobertura.cobertura}%\nDoses: ${d.cobertura.doses.toLocaleString("pt-BR")}`);
 
         const drawAxis = (g, x, y, axis, domain) => {
             g.attr("transform", `translate(${x},${y})`)
@@ -41,7 +41,7 @@ function Ranking(props) {
             if (!domain) g.select(".domain").remove();
         }
         const compact = false;//drawingStyle === "compact";
-        const svg = d3.select('.chart-ranking')
+        const svg = d3.select(".chart-ranking")
             .append("svg")
             .attr("cursor", "default")
             .attr("viewBox", [0, 0, width, height]);
@@ -70,7 +70,7 @@ function Ranking(props) {
         series.selectAll("path")
             .data(d => d)
             .join("path")
-            .attr("stroke-width", strokeWidth('default'))
+            .attr("stroke-width", strokeWidth("default"))
             .attr("d", (d, i) => {
                 if (d.next)
                     return d3.line()([[bx(i), by(d.rank)], [bx(i + 1), by(d.next.rank)]]);
@@ -80,10 +80,11 @@ function Ranking(props) {
             .data((d, i) => d.map(v => ({ state: states[i], cobertura: v, first: d[0].rank })))
             .join("g")
             .attr("transform", (d, i) => `translate(${bx(i)},${by(d.cobertura.rank)})`)
-            //.call(g => g.append("title").text((d, i) => `${d.territory} - ${quarters[i]}\n${toCurrency(d.profit.profit)}`)); 
             .call(title);
 
-        bumps.append("circle").attr("r", compact ? 5 : bumpRadius);
+        bumps.append("circle")
+            .attr("r", compact ? 5 : bumpRadius);
+
         bumps.append("text")
             .attr("dy", compact ? "-0.75em" : "0.35em")
             .attr("fill", compact ? null : "white")
@@ -92,12 +93,12 @@ function Ranking(props) {
             .style("font-weight", "bold")
             .style("font-size", "14px")
             .text(d => d.cobertura.rank + 1);
-        
+
         const ax = d3.scalePoint()
             .domain(years)
-            .range([margin.left + padding, width - margin.right - padding]); 
+            .range([margin.left + padding, width - margin.right - padding]);
 
-        const y = d3.scalePoint()  
+        const y = d3.scalePoint()
             .range([margin.top, height - margin.bottom - padding]);
 
         const left = ranking().sort((a, b) => a.first - b.first).map((d) => d.state);
@@ -105,9 +106,9 @@ function Ranking(props) {
 
         function ranking() {
             const len = years.length - 1;
-            const ranking = data.map((d, i) => ({state: states[i], first: d[0].rank, last: d[len].rank}));
+            const ranking = data.map((d, i) => ({ state: states[i], first: d[0].rank, last: d[len].rank }));
             return ranking;
-          }
+        }
 
         svg.append("g").call(g => drawAxis(g, 0, height - margin.top - margin.bottom + padding, d3.axisBottom(ax), true));
         const leftY = svg.append("g").call(g => drawAxis(g, margin.left, 0, d3.axisLeft(y.domain(left))));
@@ -146,6 +147,7 @@ function Ranking(props) {
     React.useEffect(() => {
         async function fetchData() {
             let url = `http://localhost:5000/api/v1/regions/cobertura?vaccine=${props.vacina}`;
+
             try {
                 const response = await fetch(url);
                 const json = await response.json();
@@ -154,12 +156,13 @@ function Ranking(props) {
                 console.log("error", error);
             }
         };
+
         fetchData();
     }, [props]);
 
     React.useEffect(() => {
         if (vaccineData != null) {
-            d3.select('.chart-ranking').selectAll('*').remove();
+            d3.select(".chart-ranking").selectAll("*").remove();
             const states = Array.from(new Set(vaccineData.flatMap(d => [d.regiao])))
             const years = Array.from(new Set(vaccineData.flatMap(d => [d.ano])))
 
@@ -168,8 +171,8 @@ function Ranking(props) {
                 const qi = new Map(years.map((year, i) => [year, i]));
 
                 const matrix = Array.from(ti, () => new Array(years.length).fill(null));
-                for (const { regiao, ano, cobertura } of vaccineData)
-                    matrix[ti.get(regiao)][qi.get(ano)] = { rank: 0, cobertura: +cobertura, next: null };
+                for (const { regiao, ano, cobertura, doses } of vaccineData)
+                    matrix[ti.get(regiao)][qi.get(ano)] = { rank: 0, cobertura: +cobertura, doses: +doses, next: null };
                 matrix.forEach((d) => {
                     for (let i = 0; i < d.length - 1; i++)
                         d[i].next = d[i + 1];
@@ -192,7 +195,7 @@ function Ranking(props) {
 
     return (
         <div className="chart-ranking"></div>
-    )
+    );
 }
 
 export default Ranking;

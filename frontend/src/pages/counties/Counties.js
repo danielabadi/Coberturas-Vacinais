@@ -8,14 +8,14 @@ import Coverage from "../../components/charts/coverage/Coverage";
 import TableVaccines from "../../components/tableVaccines/TableVaccines";
 
 function Counties() {
-    const [codIBGE, setCodIBGE] = React.useState('3106200');
+    const [codIBGE, setCodIBGE] = React.useState("3106200");
     const [inputSearch, setInputSearch] = React.useState("");
     const [filterSearch, setFilterSearch] = React.useState([]);
 
     const handleFilter = (event) => {
         setInputSearch(event.target.value);
         const newFilter = countiesNames.filter(value => {
-            return value.name.toLowerCase().includes(inputSearch.toLowerCase())
+            return value.name.toLowerCase().includes(inputSearch.toLowerCase());
         });
         setFilterSearch(newFilter);
     }
@@ -46,9 +46,9 @@ function Counties() {
                             tabIndex={0}
                         />
                         {filterSearch.length !== 0 &&
-                            <ul className='municipio__buscador__resultados'>
+                            <ul className="municipio__buscador__resultados">
                                 {filterSearch.slice(0, 25).map(value => (
-                                    <li key={value.cod} className='resultado' onClick={() => handleClickAutoComplete(value)} tabIndex={0}>
+                                    <li key={value.cod} className="resultado" onClick={() => handleClickAutoComplete(value)} tabIndex={0}>
                                         {value.name}
                                     </li>
                                 ))}
@@ -56,7 +56,7 @@ function Counties() {
                         }
                     </div>
 
-                    <div className='municipio_dados'>
+                    <div className="municipio_dados">
                         <MapCounties codIbge={codIBGE} />
                         <Informations codIbge={codIBGE} />
                     </div>
@@ -74,10 +74,10 @@ function Counties() {
                     <p></p>
                     <div className="cobertura__chart--disclaimer">
                         <p>
-                            Embora os dados sobre a cobertura vacinal apresentados no gráfico acima provenham do banco de dados do Sistema Único de Saúde, o DataSUS, é importante ressaltar que as 
-                            estatísticas oficiais nem sempre correspondem à realidade. De acordo com uma <a href="https://www.bbc.com/portuguese/brasil-62980100" target='_blank' rel="noreferrer">reportagem 
-                            da BBC</a> , que entrevistou especialistas e gestores de saúde, há uma discrepância 
-                            entre os números oficiais e a situação local. O problema, segundo identificado pelos gestores de saúde locais, deve-se à excessiva burocracia, à falta de pessoal adequado 
+                            Embora os dados sobre a cobertura vacinal apresentados no gráfico acima provenham do banco de dados do Sistema Único de Saúde, o DataSUS, é importante ressaltar que as
+                            estatísticas oficiais nem sempre correspondem à realidade. De acordo com uma <a href="https://www.bbc.com/portuguese/brasil-62980100" target="_blank" rel="noreferrer">reportagem
+                                da BBC</a> , que entrevistou especialistas e gestores de saúde, há uma discrepância
+                            entre os números oficiais e a situação local. O problema, segundo identificado pelos gestores de saúde locais, deve-se à excessiva burocracia, à falta de pessoal adequado
                             e à conectividade inadequada ou ao acesso a sistemas de informação mais modernos e conectados.
                         </p>
                     </div>

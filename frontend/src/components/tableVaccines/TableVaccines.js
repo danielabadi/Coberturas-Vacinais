@@ -26,7 +26,7 @@ function TableVaccines() {
                 ))}
             </tbody>
         </table>
-    )
+    );
 }
 
 export default TableVaccines;

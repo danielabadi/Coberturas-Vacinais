@@ -77,4 +77,20 @@ router.get('/pib', (req, res) => {
     });
 });
 
+router.get('/cobertura_mapa', (req, res) => {
+  db.select('municipio_cod_ibge', 'cobertura', 'doses')
+      .where('vacina_id', req.query.vaccine)
+      .where('ano', req.query.year)
+      .table('municipio_vacina')
+      .then(data => {
+          const dictionary = data.reduce((dictionary, dado) => {
+              dictionary[dado.municipio_cod_ibge] = dado;
+              return dictionary;
+          }, {});
+          res.json(dictionary);
+      }).catch(err => {
+          console.log(err);
+      });
+});
+
 module.exports = router;

@@ -1,21 +1,27 @@
-import React from 'react';
-import Leaflet from 'leaflet';
-import { stateState } from '../../assets/states/atom';
+import React from "react";
+import Leaflet from "leaflet";
+import { stateState } from "../../assets/states/atom";
 import { useSetRecoilState } from "recoil";
 
 function MapState(props) {
     const setState = useSetRecoilState(stateState);
-    var legend = Leaflet.control({ position: 'bottomleft' });
-    var popup = Leaflet.popup({ keepInView: true });
+    var legend = Leaflet.control({ position: "bottomleft" });
+    const popup = Leaflet.popup({ keepInView: true });
     const [states, setSates] = React.useState(null);
     const [coberturas, setCoberturas] = React.useState(null);
+    const info = Leaflet.control({ position: "bottomright" });
 
+    info.onAdd = function () {
+        this._div = Leaflet.DomUtil.create("div", "info_interacao"); // create a div with a class "info"
+        this._div.innerHTML = "<h4>Clique em um estado</h4>"
+        return this._div;
+    };
 
     // Gera a legenda
     legend.onAdd = function () {
-        var div = Leaflet.DomUtil.create('div', 'mapa_estado_info'),
+        var div = Leaflet.DomUtil.create("div", "mapa_estado_info"),
             grades = [0, 40, 50, 60, 70, 80, 90, 100];
-        div.innerHTML += '<p>Cobertura vacinal</p>'
+        div.innerHTML += "<p>Cobertura vacinal</p>"
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
@@ -26,23 +32,23 @@ function MapState(props) {
     };
 
     function getColor(d) {
-        return d >= 100 ? '#ff425f' :
-            d >= 90 ? '#ff6575' :
-                d >= 80 ? '#ff818b' :
-                    d >= 70 ? '#ff9ba1' :
-                        d >= 60 ? '#ffb4b8' :
-                            d >= 50 ? '#ffccce' :
-                                d >= 40 ? '#ffe4e5' :
-                                    '#ffffff';
+        return d >= 100 ? "#ff425f" :
+            d >= 90 ? "#ff6575" :
+                d >= 80 ? "#ff818b" :
+                    d >= 70 ? "#ff9ba1" :
+                        d >= 60 ? "#ffb4b8" :
+                            d >= 50 ? "#ffccce" :
+                                d >= 40 ? "#ffe4e5" :
+                                    "#ffffff";
     }
 
     function style(feature) {
         return {
-            fillColor: getColor(coberturas[feature.properties.codarea]['cobertura']),
+            fillColor: getColor(coberturas[feature.properties.codarea]["cobertura"]),
             weight: 1,
             opacity: 1,
-            color: 'black',
-            dashArray: '1',
+            color: "black",
+            dashArray: "1",
             fillOpacity: 1
         };
     }
@@ -53,6 +59,7 @@ function MapState(props) {
     React.useEffect(() => {
         async function fetchData() {
             let url = `https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?formato=application/vnd.geo+json&qualidade=intermediaria&intrarregiao=UF`;
+
             try {
                 const response = await fetch(url);
                 const json = await response.json();
@@ -82,17 +89,16 @@ function MapState(props) {
             layerRef.current = Leaflet.geoJson(states).addTo(mapRef.current);
             mapRef.current.fitBounds(layerRef.current.getBounds());
             legend.addTo(mapRef.current);
+            info.addTo(mapRef.current);
         }
     }, [states]);
 
     function handleClick(feature) {
         setState(feature.target.feature.properties.codarea);
-        console.log(feature.target.feature.properties);
-        console.log(coberturas[feature.target.feature.properties.codarea])
         popup.setLatLng(feature.target.getCenter())
-            .setContent(`<h1 style="margin: 0; text-align: center; font-size: 20px" >${coberturas[feature.target.feature.properties.codarea]['estado_uf']}</h1>
-                <p style="margin-top: 0">${coberturas[feature.target.feature.properties.codarea]['cobertura']}% de cobertura <br>
-                ${coberturas[feature.target.feature.properties.codarea]['doses'].toLocaleString('pt-BR')} doses aplicadas</p>`)
+            .setContent(`<h1 style="margin: 0; text-align: center; font-size: 20px" >${coberturas[feature.target.feature.properties.codarea]["estado_uf"]}</h1>
+                <p style="margin-top: 0">${coberturas[feature.target.feature.properties.codarea]["cobertura"]}% de cobertura <br>
+                ${coberturas[feature.target.feature.properties.codarea]["doses"].toLocaleString("pt-BR")} doses aplicadas</p>`)
             .openOn(mapRef.current);
     }
 
@@ -101,16 +107,17 @@ function MapState(props) {
             click: handleClick
         });
 
-        layer.bindTooltip(coberturas[feature.properties.codarea]['estado_uf'], {
+        layer.bindTooltip(coberturas[feature.properties.codarea]["estado_uf"], {
             permanent: true,
-            direction: 'center',
-            className: 'mapa_estado_popup'
+            direction: "center",
+            className: "mapa_estado_popup"
         });
     }
 
     React.useEffect(() => {
         async function fetchDataMapa() {
             let url = `http://localhost:5000/api/v1/states/cobertura_mapa?vaccine=${props.dado.vaccine}&year=${props.dado.year}`;
+            
             try {
                 const response = await fetch(url);
                 const json = await response.json();

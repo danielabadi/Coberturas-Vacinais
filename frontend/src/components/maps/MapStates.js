@@ -116,7 +116,7 @@ function MapState(props) {
 
     React.useEffect(() => {
         async function fetchDataMapa() {
-            let url = `http://localhost:5000/api/v1/states/cobertura_mapa?vaccine=${props.dado.vaccine}&year=${props.dado.year}`;
+            let url = `http://localhost:5000/api/v1/states/map_coverage?vaccine=${props.dado.vaccine}&year=${props.dado.year}`;
             
             try {
                 const response = await fetch(url);

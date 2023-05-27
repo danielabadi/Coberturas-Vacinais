@@ -62,7 +62,7 @@ function MapCoverage(props) {
     React.useEffect(() => {
         if (props.dado.vaccine !== lastProp.vaccine | props.dado.year !== lastProp.year) {
             async function fetchDataMapa() {
-                const url = `http://localhost:5000/api/v1/cities/cobertura_mapa?vaccine=${props.dado.vaccine}&year=${props.dado.year}`;
+                const url = `http://localhost:5000/api/v1/cities/map_coverage?vaccine=${props.dado.vaccine}&year=${props.dado.year}`;
 
                 try {
                     const response = await fetch(url);

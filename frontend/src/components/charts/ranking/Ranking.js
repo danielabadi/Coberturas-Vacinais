@@ -146,7 +146,7 @@ function Ranking(props) {
 
     React.useEffect(() => {
         async function fetchData() {
-            let url = `http://localhost:5000/api/v1/regions/cobertura?vaccine=${props.vacina}`;
+            let url = `http://localhost:5000/api/v1/regions/coverage?vaccine=${props.vacina}`;
 
             try {
                 const response = await fetch(url);

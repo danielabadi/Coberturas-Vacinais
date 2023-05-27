@@ -178,7 +178,7 @@ function Coverage(props) {
 
     React.useEffect(() => {
         async function fetchData() {
-            let url = `http://localhost:5000/api/v1/cities/cobertura?city=${props.codIbge}`;
+            let url = `http://localhost:5000/api/v1/cities/coverage?city=${props.codIbge}`;
 
             try {
                 const response = await fetch(url);

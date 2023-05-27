@@ -3,94 +3,129 @@ const db = require('../db');
 
 const router = express.Router();
 
-router.get('/cobertura', (req, res) => {
-  db.select('municipio_cod_ibge', 'cobertura', 'ano', 'nome')
-    .where('municipio_cod_ibge', req.query.city)
-    .orderBy('ano')
-    .table('municipio_vacina')
-    .leftJoin('vacina', 'vacina_id', 'id_vacina')
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+router.get('/coverage', async (req, res) => {
+    try {
+        const data = await db('municipio_vacina')
+            .select('municipio_cod_ibge', 'cobertura', 'ano', 'nome')
+            .where('municipio_cod_ibge', req.query.city)
+            .orderBy('ano')
+            .leftJoin('vacina', 'vacina_id', 'id_vacina');
+
+        if (data.length === 0) {
+            console.log('No data found');
+            return res.status(404).json([]);
+        }
+
+        return res.json(data);
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
-router.get('/info', (req, res) => {
-  db.select({
-    cod_ibge: 'cod_ibge',
-    municipio: 'nome',
-    pop_urbana_2010: 'porcentagem_pop_urbana_2010',
-    densidade_2010: 'densidade_demografica_2010',
-    area: 'area_km2',
-    idhm: 'idhm',
-    idhm_renda: 'idhm_renda',
-    idhm_long: 'idhm_longevidade',
-    idhm_edu: 'idhm_educacao',
-    quantidade_estabelecimentos: 'quantidade_estabelecimentos',
-  })
-    .where('cod_ibge', req.query.city)
-    .table('municipio')
-    .leftJoin('idhm', 'cod_ibge', 'municipio_cod_ibge')
-    .leftJoin('estabelecimentos_sus', 'cod_ibge', 'estabelecimentos_sus.municipio_cod_ibge')
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+router.get('/info', async (req, res) => {
+    try {
+        const data = await db('municipio')
+            .select({
+                cod_ibge: 'cod_ibge',
+                municipio: 'nome',
+                pop_urbana_2010: 'porcentagem_pop_urbana_2010',
+                densidade_2010: 'densidade_demografica_2010',
+                area: 'area_km2',
+                idhm: 'idhm',
+                idhm_renda: 'idhm_renda',
+                idhm_long: 'idhm_longevidade',
+                idhm_edu: 'idhm_educacao',
+                quantidade_estabelecimentos: 'quantidade_estabelecimentos',
+            })
+            .leftJoin('idhm', 'cod_ibge', 'municipio_cod_ibge')
+            .leftJoin('estabelecimentos_sus', 'cod_ibge', 'estabelecimentos_sus.municipio_cod_ibge')
+            .where('cod_ibge', req.query.city);
+
+        if (data.length === 0) {
+            console.log('No data found');
+            return res.status(404).json([]);
+        }
+
+        return res.json(data);
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
-router.get('/populacao', (req, res) => {
-  db.select({
-    cod_ibge: 'municipio_cod_ibge',
-    ano: 'ano',
-    populacao: 'pop',
-  })
-    .where('municipio_cod_ibge', req.query.city)
-    .orderBy('ano')
-    .table('pop_municipio')
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+router.get('/populacao', async (req, res) => {
+    try {
+        const data = await db('pop_municipio')
+            .select('municipio_cod_ibge as cod_ibge', 'ano', 'pop as populacao')
+            .where('municipio_cod_ibge', req.query.city)
+            .orderBy('ano');
+
+        if (data.length === 0) {
+            console.log('No data found');
+            return res.status(404).json([]);
+        }
+
+        return res.json(data);
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
-router.get('/pib', (req, res) => {
-  db.select({
-    cod_ibge: 'municipio_cod_ibge',
-    ano: 'ano',
-    pib: 'pib',
-    pib_per_capita: 'pib_per_capita',
-  })
-    .where('municipio_cod_ibge', req.query.city)
-    .orderBy('ano')
-    .table('pib')
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+router.get('/pib', async (req, res) => {
+    try {
+        const data = await db('pib')
+            .select({
+                cod_ibge: 'municipio_cod_ibge',
+                ano: 'ano',
+                pib: 'pib',
+                pib_per_capita: 'pib_per_capita',
+            })
+            .where('municipio_cod_ibge', req.query.city)
+            .orderBy('ano')
+            .table('pib');
+
+        if (data.length === 0) {
+            console.log('No data found');
+            return res.status(404).json([]);
+        }
+
+        return res.json(data);
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    };
 });
 
-router.get('/cobertura_mapa', (req, res) => {
-  db.select('municipio_cod_ibge', 'cobertura', 'doses')
-      .where('vacina_id', req.query.vaccine)
-      .where('ano', req.query.year)
-      .table('municipio_vacina')
-      .then(data => {
-          const dictionary = data.reduce((dictionary, dado) => {
-              dictionary[dado.municipio_cod_ibge] = dado;
-              return dictionary;
-          }, {});
-          res.json(dictionary);
-      }).catch(err => {
-          console.log(err);
-      });
+router.get('/map_coverage', async (req, res) => {
+    try {
+        const data = await db('municipio_vacina')
+            .select('municipio_cod_ibge', 'cobertura', 'doses')
+            .where('vacina_id', req.query.vaccine)
+            .where('ano', req.query.year);
+
+        if (data.length === 0) {
+            console.log('No data found');
+            return res.status(404).json([]);
+        }
+
+        const dictionary = data.reduce((dict, item) => {
+            dict[item.municipio_cod_ibge] = item;
+            return dict;
+        }, {});
+
+        return res.json(dictionary);
+
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
 });
 
 module.exports = router;

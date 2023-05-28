@@ -6,7 +6,12 @@ const router = express.Router();
 router.get('/coverage', async (req, res) => {
     try {
         const data = await db('municipio_vacina')
-            .select('municipio_cod_ibge', 'cobertura', 'ano', 'nome')
+            .select({
+                cod_ibge: 'municipio_cod_ibge',
+                cobertura: 'cobertura',
+                ano: 'ano',
+                nome: 'nome'
+            })
             .where('municipio_cod_ibge', req.query.city)
             .orderBy('ano')
             .leftJoin('vacina', 'vacina_id', 'id_vacina');
@@ -45,7 +50,7 @@ router.get('/info', async (req, res) => {
 
         if (data.length === 0) {
             console.log('No data found');
-            return res.status(404).json([]);
+            return res.status(404).json({});
         }
 
         return res.json(data);
@@ -56,19 +61,23 @@ router.get('/info', async (req, res) => {
     }
 });
 
-router.get('/populacao', async (req, res) => {
+router.get('/population', async (req, res) => {
     try {
         const data = await db('pop_municipio')
-            .select('municipio_cod_ibge as cod_ibge', 'ano', 'pop as populacao')
+            .select({
+                cod_ibge: 'municipio_cod_ibge',
+                ano: 'ano',
+                populacao: 'pop'
+            })
             .where('municipio_cod_ibge', req.query.city)
             .orderBy('ano');
 
         if (data.length === 0) {
             console.log('No data found');
-            return res.status(404).json([]);
+            return res.status(404).json({});
         }
 
-        return res.json(data);
+        return res.json(...data.slice(-1));
 
     } catch (error) {
         console.log(error);
@@ -92,10 +101,10 @@ router.get('/pib', async (req, res) => {
 
         if (data.length === 0) {
             console.log('No data found');
-            return res.status(404).json([]);
+            return res.status(404).json({});
         }
 
-        return res.json(data);
+        return res.json(...data.slice(-1));
 
     } catch (error) {
         console.log(error);
@@ -106,7 +115,11 @@ router.get('/pib', async (req, res) => {
 router.get('/map_coverage', async (req, res) => {
     try {
         const data = await db('municipio_vacina')
-            .select('municipio_cod_ibge', 'cobertura', 'doses')
+            .select({
+                cod_ibge: 'municipio_cod_ibge',
+                cobertura: 'cobertura',
+                doses: 'doses'
+            })
             .where('vacina_id', req.query.vaccine)
             .where('ano', req.query.year);
 
@@ -116,7 +129,7 @@ router.get('/map_coverage', async (req, res) => {
         }
 
         const dictionary = data.reduce((dict, item) => {
-            dict[item.municipio_cod_ibge] = item;
+            dict[item.cod_ibge] = item;
             return dict;
         }, {});
 

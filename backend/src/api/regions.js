@@ -6,7 +6,13 @@ const router = express.Router();
 router.get('/coverage', async (req, res) => {
     try {
         const data = await db('regiao_vacina')
-            .select('regiao', 'vacina_id', 'ano', 'cobertura', 'doses')
+            .select({
+                regiao: 'regiao',
+                vacina_id: 'vacina_id',
+                ano: 'ano',
+                cobertura: 'cobertura',
+                doses: 'doses'
+            })
             .where('vacina_id', req.query.vaccine)
             .orderBy('ano');
 

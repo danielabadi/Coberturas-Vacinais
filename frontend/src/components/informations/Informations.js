@@ -21,7 +21,7 @@ function Informations(props) {
         }
 
         async function fetchPopulacaounicipiosData() {
-            const url = `http://localhost:5000/api/v1/cities/populacao?city=${props.codIbge}`;
+            const url = `http://localhost:5000/api/v1/cities/population?city=${props.codIbge}`;
 
             try {
                 const response = await fetch(url);
@@ -82,14 +82,14 @@ function Informations(props) {
                                 "Sem dado" : municipiosData.area.toLocaleString("pt-BR")} km<sup>2</sup></p>
                         </div>
 
-                        <div role="textbox" aria-label={`População em ${popData.at(-1).ano} ${popData.at(-1).populacao.toLocaleString("pt-BR")} habitantes`}>
-                            <h3>População <sup>[{popData.at(-1).ano}]</sup></h3>
-                            <p>{popData.at(-1).populacao.toLocaleString("pt-BR")}</p>
+                        <div role="textbox" aria-label={`População em ${popData.ano} ${popData.populacao.toLocaleString("pt-BR")} habitantes`}>
+                            <h3>População <sup>[{popData.ano}]</sup></h3>
+                            <p>{popData.populacao.toLocaleString("pt-BR")}</p>
                         </div>
 
-                        <div role="textbox" aria-label={`PIB per capita em ${pibData.at(-1).ano} ${pibData.at(-1).pib_per_capita.toLocaleString("pt-BR")} R$`}>
-                            <h3>PIB per capita <sup>[{pibData.at(-1).ano}]</sup></h3>
-                            <p>R$ {pibData.at(-1).pib_per_capita.toLocaleString("pt-BR")}</p>
+                        <div role="textbox" aria-label={`PIB per capita em ${pibData.ano} ${pibData.pib_per_capita.toLocaleString("pt-BR")} R$`}>
+                            <h3>PIB per capita <sup>[{pibData.ano}]</sup></h3>
+                            <p>R$ {pibData.pib_per_capita.toLocaleString("pt-BR")}</p>
                         </div>
                     </div>
                     <Idhm

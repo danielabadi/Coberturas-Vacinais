@@ -210,14 +210,14 @@ function MapCoverage(props) {
                 return `translate(${scaleColumn(x)}, ${scaleRow(y)})`
             })
             .attr("fill", (d, i) => {
-                return `${getColorRGBA(d.municipio_cod_ibge.slice(0, 2))}${1 - percentageToDecimal(calculatePercentage(max, min, d.cobertura)) + 0.2})`
+                return `${getColorRGBA(d.cod_ibge.slice(0, 2))}${1 - percentageToDecimal(calculatePercentage(max, min, d.cobertura)) + 0.2})`
             })
             .on("pointerenter", pointerentered)
             .on("click", click);
 
         function click(event) {
             layerAux.current.clearLayers();
-            Leaflet.geoJSON(dictCounties[event.target.__data__.municipio_cod_ibge],
+            Leaflet.geoJSON(dictCounties[event.target.__data__.cod_ibge],
                 { style: { fillOpacity: 0 } }
             ).addTo(layerAux.current);
 
@@ -226,7 +226,7 @@ function MapCoverage(props) {
 
         function pointerentered(event) {
             const newFilter = countiesNames.findIndex(value => {
-                return value.cod === event.target.__data__.municipio_cod_ibge
+                return value.cod === event.target.__data__.cod_ibge
             });
             title.text(`Município: ${countiesNames[newFilter]["name"]}\nCobertura: ${event.target.__data__.cobertura + "%"} \nDoses aplicadas: ${event.target.__data__.doses}`);
         }

@@ -6,7 +6,14 @@ const router = express.Router();
 router.get('/map_coverage', async (req, res) => {
     try {
         const data = await db('estado_vacina')
-            .select('cod_ibge', 'estado_uf', 'vacina_id', 'ano', 'cobertura', 'doses')
+            .select({
+                cod_ibge: 'cod_ibge',
+                estado_uf: 'estado_uf',
+                vacina_id: 'vacina_id',
+                ano: 'ano',
+                cobertura: 'cobertura',
+                doses: 'doses'
+            })
             .where('vacina_id', req.query.vaccine)
             .where('ano', req.query.year)
             .orderBy('cod_ibge');
@@ -29,32 +36,11 @@ router.get('/map_coverage', async (req, res) => {
     }
 });
 
-router.get('/coverage', async (req, res) => {
-    try {
-        const data = await db('estado_vacina')
-            .select('estado_uf', 'vacina_id', 'ano', 'cobertura')
-            .where('vacina_id', req.query.vaccine)
-            .orderBy('ano');
-
-        if (data.length === 0) {
-            console.log('No data found');
-            return res.status(404).json([]);
-        }
-
-        return res.json(data);
-
-    } catch (error) {
-        console.log(error);
-        return res.sendStatus(500);
-    }
-});
-
 router.get('/info', async (req, res) => {
     try {
         const data = await db('estado')
             .select({
                 cod_ibge: 'cod_ibge',
-                uf: 'estado.uf',
                 pop_urbana_2010: 'porc_pop_urbana_2010',
                 area: 'area_total',
                 qtd_municipios: 'qtd_municipios',
@@ -70,7 +56,7 @@ router.get('/info', async (req, res) => {
 
         if (data.length === 0) {
             console.log('No data found');
-            return res.status(404).json([]);
+            return res.status(404).json({});
         }
 
         return res.json(data);

@@ -44,8 +44,8 @@ router.get('/info', async (req, res) => {
                 idhm_edu: 'idhm_educacao',
                 quantidade_estabelecimentos: 'quantidade_estabelecimentos',
             })
-            .leftJoin('idhm', 'cod_ibge', 'municipio_cod_ibge')
-            .leftJoin('estabelecimentos_sus', 'cod_ibge', 'estabelecimentos_sus.municipio_cod_ibge')
+            .leftJoin('municipio_idhm', 'cod_ibge', 'municipio_cod_ibge')
+            .leftJoin('municipio_estabelecimentos_sus', 'cod_ibge', 'municipio_estabelecimentos_sus.municipio_cod_ibge')
             .where('cod_ibge', req.query.city);
 
         if (data.length === 0) {
@@ -63,7 +63,7 @@ router.get('/info', async (req, res) => {
 
 router.get('/population', async (req, res) => {
     try {
-        const data = await db('pop_municipio')
+        const data = await db('municipio_populacao')
             .select({
                 cod_ibge: 'municipio_cod_ibge',
                 ano: 'ano',
@@ -88,7 +88,7 @@ router.get('/population', async (req, res) => {
 
 router.get('/pib', async (req, res) => {
     try {
-        const data = await db('pib')
+        const data = await db('municipio_pib')
             .select({
                 cod_ibge: 'municipio_cod_ibge',
                 ano: 'ano',
@@ -96,8 +96,7 @@ router.get('/pib', async (req, res) => {
                 pib_per_capita: 'pib_per_capita',
             })
             .where('municipio_cod_ibge', req.query.city)
-            .orderBy('ano')
-            .table('pib');
+            .orderBy('ano');
 
         if (data.length === 0) {
             console.log('No data found');

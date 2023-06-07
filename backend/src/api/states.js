@@ -7,7 +7,7 @@ router.get('/map_coverage', async (req, res) => {
     try {
         const data = await db('estado_vacina')
             .select({
-                cod_ibge: 'cod_ibge',
+                cod_ibge: 'estado_cod_ibge',
                 estado_uf: 'estado_uf',
                 vacina_id: 'vacina_id',
                 ano: 'ano',

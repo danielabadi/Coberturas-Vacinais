@@ -7,12 +7,13 @@ router.get('/coverage', async (req, res) => {
     try {
         const data = await db('regiao_vacina')
             .select({
-                regiao: 'regiao',
+                regiao: 'nome',
                 vacina_id: 'vacina_id',
                 ano: 'ano',
                 cobertura: 'cobertura',
                 doses: 'doses'
             })
+            .leftJoin('regiao', 'cod_ibge', 'regiao_cod_ibge')
             .where('vacina_id', req.query.vaccine)
             .orderBy('ano');
 

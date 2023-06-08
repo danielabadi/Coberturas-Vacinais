@@ -1,0 +1,28 @@
+nome,uf,macro_regiao,cod_ibge,qtd_municipios,porc_pop_urbana_2010,area_total
+São Paulo,SP,Sudeste,35,645,84.32,248219.48
+Paraná,PR,Sul,41,399,68.39,199298.98
+Santa Catarina,SC,Sul,42,295,58.67,95730.69
+Rio Grande do Sul,RS,Sul,43,497,55.43,268637.84
+Mato Grosso do Sul,MS,Centro-Oeste,50,79,70.33,357148
+Mato Grosso,MT,Centro-Oeste,51,141,66.55,903207.06
+Goiás,GO,Centro-Oeste,52,246,75.05,340242.88
+Distrito Federal,DF,Centro-Oeste,53,1,96.6,5760.78
+Rondônia,RO,Norte,11,52,51.66,237765.34
+Acre,AC,Norte,12,22,52.75,164173.44
+Amazonas,AM,Norte,13,62,54.98,1.5591679e+06
+Roraima,RR,Norte,14,15,44.03,223644.53
+Pará,PA,Norte,15,144,50.98,1.2458708e+06
+Amapá,AP,Norte,16,16,68.75,142470.77
+Tocantins,TO,Norte,17,139,65.55,277423.62
+Maranhão,MA,Nordeste,21,217,51.22,329651.5
+Piauí,PI,Nordeste,22,224,46.56,251755.48
+Ceará,CE,Nordeste,23,184,56.39,148894.44
+Rio Grande do Norte,RN,Nordeste,24,167,62.42,52809.6
+Paraíba,PB,Nordeste,25,223,56.45,56467.24
+Pernambuco,PE,Nordeste,26,185,61.99,98067.88
+Alagoas,AL,Nordeste,27,102,56.78,27830.66
+Sergipe,SE,Nordeste,28,75,56.54,21938.18
+Bahia,BA,Nordeste,29,417,54.28,564760.44
+Minas Gerais,MG,Sudeste,31,853,67.92,586514
+Espírito Santo,ES,Sudeste,32,78,63.31,46074.45
+Rio de Janeiro,RJ,Sudeste,33,92,84.34,43750.43

@@ -1,0 +1,25 @@
+id_vacina,nome,doenca,idade_recomendada,esquema_vacinal,reforco
+1,BCG,"Formas graves de tuberculose, meníngea e miliar",Ao nascer,Dose única,Sem reforço
+2,DTP,"Difteria, Tétano e Coqueluche",15 meses,Considerar doses anteriores com penta e DTP,Um reforço com a vacina DTP REF (4 e 6 anos)
+3,dTpa gestante,"Difteria, Tétano e Coqueluche",Sem idade recomendada,Uma dose para gestantes a partir da 20ª semana de gravidez,Uma dose a cada gestação
+4,DTP REF (4 e 6 anos),"Difteria, Tétano e Coqueluche",4 a 6 anos de idade,Considerar doses anteriores com penta e DTP,Sem reforço
+5,Dupla adulto e tríplice acelular gestante,"Difteria, Tétano e Coqueluche",Sem idade recomendada,Uma dose para gestantes a partir da 20ª semana de gravidez,Uma dose a cada gestação
+6,Febre Amarela,Febre Amarela,Para pessoas até 59 anos de idade não vacinadas,"Dose única, para pessoas que nunca foram vacinadas ou sem comprovante de vacinação","Reforço, caso a pessoa tenha recebido uma dose da vacina antes de completar 5 anos de idade"
+7,Hepatite A,Hepatite A,15 meses,Uma dose,Sem reforço
+8,Hepatite B,Hepatite B,Sem idade recomendada,"3 doses (Iniciar ou completar o esquema, de acordo com situação vacinal)",Sem reforço
+9,Hepatite B  em crianças até 30 dias,Hepatite B,Ao nascer,Dose ao nascer,Reforço com a vacina Hepatite B
+10,Meningococo C,Meningite meningocócica sorogrupo C,"1ª dose: 3 meses, 2ª dose: 5 meses",Duas doses,Reforço com a vacina Meningococo C (1º ref)
+11,Meningococo C (1º ref),Meningite meningocócica sorogrupo C,1 ano,Uma dose,Sem reforço
+12,Penta,"Difteria, Tétano, Coqueluche, Haemophilus influenzae B e Hepatite B","1ª dose: 2 meses, 2ª dose: 4 meses, 3ª dose: 6 meses",Três doses,Dois reforços com a vacina DTP
+13,Pneumocócica,"Pneumonias, Meningites, Otites, Sinusites pelos sorotipos que compõem a vacina","1ª dose: 2 meses, 2ª dose: 4 meses",Duas doses,Reforço com a vacina Pneumocócica(1º ref)
+14,Pneumocócica(1º ref),"Pneumonias, Meningites, Otites, Sinusites pelos sorotipos que compõem a vacina",1 ano,Uma dose,Sem reforço
+15,Poliomielite,Poliomielite,"1ª dose: 2 meses, 2ª dose: 4 meses, 3ª dose: 6 meses",Três doses,Reforço com a vacina Poliomielite(1º ref) e Poliomielite 4 anos
+16,Poliomielite 4 anos,Poliomielite,4 anos,Uma dose,Sem reforço
+17,Poliomielite(1º ref),Poliomielite,15 meses,Uma dose,Reforço com a vacina Poliomielite 4 anos
+18,Rotavírus Humano,Diarreia por Rotavírus,"1ª dose: 2 meses, 2ª dose: 4 meses",Duas doses,Sem reforço
+19,Tetra Viral(SRC+VZ),"Sarampo, Caxumba, Rubéola e Varicela",15 meses,Duas doses (segunda dose da SCR e primeira de varicela),Sem reforço
+20,Tetravalente (DTP/Hib) (TETRA),"Difteria, Tétano, Coqueluche e Haemophilus","1ª dose: 2 meses, 2ª dose: 4 meses, 3ª dose: 6 meses",Três doses,Dois reforços com a vacina DTP
+21,Tríplice Bacteriana(DTP)(1º ref),"Difteria, Tétano e Coqueluche",15 meses,Considerar doses anteriores com penta e DTP,Um reforço com a vacina DTP REF (4 e 6 anos)
+22,Tríplice Viral  D1,"Sarampo, Caxumba e Rubéola",1 ano,Duas doses (primeira dose da SCR e segunda dose com SCRV),Reforço com a vacina Tetra Viral(SRC+VZ) ou Tríplice Viral D2 + Varicela
+23,Tríplice Viral  D2,"Sarampo, Caxumba e Rubéola",15 meses,Duas doses (primeira dose da SCR),Sem reforço
+24,Varicela,Varicela,4 anos,Uma dose (corresponde à segunda dose da varicela),Sem reforço

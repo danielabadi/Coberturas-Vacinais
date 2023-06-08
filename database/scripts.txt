@@ -1,0 +1,386 @@
+-- Database: vacinacao
+
+-- DROP DATABASE IF EXISTS vacinacao;
+
+CREATE DATABASE vacinacao
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+-- SCHEMA: geodata
+
+-- DROP SCHEMA IF EXISTS geodata ;
+
+CREATE SCHEMA IF NOT EXISTS geodata
+    AUTHORIZATION postgres;
+
+
+-- Table: geodata.vacina
+
+-- DROP TABLE IF EXISTS geodata.vacina;
+
+CREATE TABLE IF NOT EXISTS geodata.vacina
+(
+    id_vacina integer NOT NULL,
+    nome character varying(80) COLLATE pg_catalog."default",
+    doenca character varying(100) COLLATE pg_catalog."default",
+    idade_recomendada character varying(100) COLLATE pg_catalog."default",
+    esquema_vacinal character varying(100) COLLATE pg_catalog."default",
+    reforco character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT pk_vacina PRIMARY KEY (id_vacina)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.vacina
+    OWNER to postgres;
+
+
+-- Table: geodata.estado
+
+-- DROP TABLE IF EXISTS geodata.estado;
+
+CREATE TABLE IF NOT EXISTS geodata.estado
+(
+    nome character varying(50) COLLATE pg_catalog."default",
+    uf character varying(2) COLLATE pg_catalog."default",
+    macro_regiao character varying(50) COLLATE pg_catalog."default",
+    geom geometry,
+    cod_ibge character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    qtd_municipios integer,
+    porc_pop_urbana_2010 real,
+    area_total real,
+    CONSTRAINT pk_estado PRIMARY KEY (cod_ibge)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.estado
+    OWNER to postgres;
+-- Index: sidx_estado
+
+-- DROP INDEX IF EXISTS geodata.sidx_estado;
+
+CREATE INDEX IF NOT EXISTS sidx_estado
+    ON geodata.estado USING gist
+    (geom)
+    TABLESPACE pg_default;
+
+
+-- Table: geodata.estado_estabelecimentos_sus
+
+-- DROP TABLE IF EXISTS geodata.estado_estabelecimentos_sus;
+
+CREATE TABLE IF NOT EXISTS geodata.estado_estabelecimentos_sus
+(
+    quantidade_estabelecimentos integer,
+    estado_cod_ibge character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_estado_estabelecimentos_sus_ref_estados FOREIGN KEY (estado_cod_ibge)
+        REFERENCES geodata.estado (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.estado_estabelecimentos_sus
+    OWNER to postgres;
+
+
+-- Table: geodata.estado_idhm
+
+-- DROP TABLE IF EXISTS geodata.estado_idhm;
+
+CREATE TABLE IF NOT EXISTS geodata.estado_idhm
+(
+    idhm real,
+    idhm_renda real,
+    idhm_longevidade real,
+    idhm_educacao real,
+    estado_cod_ibge character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_estado_idhm_ref_estado FOREIGN KEY (estado_cod_ibge)
+        REFERENCES geodata.estado (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.estado_idhm
+    OWNER to postgres;
+
+
+-- Table: geodata.estado_vacina
+
+-- DROP TABLE IF EXISTS geodata.estado_vacina;
+
+CREATE TABLE IF NOT EXISTS geodata.estado_vacina
+(
+    ano integer,
+    cobertura real,
+    doses integer,
+    vacina_id integer NOT NULL,
+    estado_uf character varying(2) COLLATE pg_catalog."default",
+    estado_cod_ibge character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_estado_vacina_ref_estado FOREIGN KEY (estado_cod_ibge)
+        REFERENCES geodata.estado (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT fk_estado_vacina_ref_vacina FOREIGN KEY (vacina_id)
+        REFERENCES geodata.vacina (id_vacina) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.estado_vacina
+    OWNER to postgres;
+
+
+-- Table: geodata.municipio
+
+-- DROP TABLE IF EXISTS geodata.municipio;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio
+(
+    cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    nome character varying(80) COLLATE pg_catalog."default",
+    porcentagem_pop_urbana_2010 real,
+    densidade_demografica_2010 real,
+    geom geometry,
+    area_km2 real,
+    CONSTRAINT pk_municipio PRIMARY KEY (cod_ibge)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio
+    OWNER to postgres;
+-- Index: sidx_municipio
+
+-- DROP INDEX IF EXISTS geodata.sidx_municipio;
+
+CREATE INDEX IF NOT EXISTS sidx_municipio
+    ON geodata.municipio USING gist
+    (geom)
+    TABLESPACE pg_default;
+
+
+-- Table: geodata.municipio_cobertura_sus
+
+-- DROP TABLE IF EXISTS geodata.municipio_cobertura_sus;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio_cobertura_sus
+(
+    ano integer,
+    numero_equipes_esf integer,
+    numero_equipes_equivalentes_esf integer,
+    cobertura_esf real,
+    cobertura_ab real,
+    municipio_cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_municipio_cobertura_sus_ref_municipio FOREIGN KEY (municipio_cod_ibge)
+        REFERENCES geodata.municipio (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio_cobertura_sus
+    OWNER to postgres;
+
+
+-- Table: geodata.municipio_estabelecimentos_sus
+
+-- DROP TABLE IF EXISTS geodata.municipio_estabelecimentos_sus;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio_estabelecimentos_sus
+(
+    quantidade_estabelecimentos integer,
+    municipio_cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    ano integer,
+    CONSTRAINT fk_municipio_estabelecimentos_sus_ref_municipio FOREIGN KEY (municipio_cod_ibge)
+        REFERENCES geodata.municipio (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio_estabelecimentos_sus
+    OWNER to postgres;
+
+
+-- Table: geodata.municipio_idhm
+
+-- DROP TABLE IF EXISTS geodata.municipio_idhm;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio_idhm
+(
+    idhm real,
+    idhm_renda real,
+    idhm_longevidade real,
+    idhm_educacao real,
+    municipio_cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    ano integer,
+    CONSTRAINT fk_municipio_idhm_ref_municipio FOREIGN KEY (municipio_cod_ibge)
+        REFERENCES geodata.municipio (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio_idhm
+    OWNER to postgres;
+
+
+-- Table: geodata.municipio_pib
+
+-- DROP TABLE IF EXISTS geodata.municipio_pib;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio_pib
+(
+    ano integer,
+    pib real,
+    pib_per_capita real,
+    municipio_cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_municipio_pib_ref_municipio FOREIGN KEY (municipio_cod_ibge)
+        REFERENCES geodata.municipio (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio_pib
+    OWNER to postgres;
+
+
+-- Table: geodata.municipio_populacao
+
+-- DROP TABLE IF EXISTS geodata.municipio_populacao;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio_populacao
+(
+    ano integer,
+    pop integer,
+    municipio_cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_municipio_populacao_ref_municipio FOREIGN KEY (municipio_cod_ibge)
+        REFERENCES geodata.municipio (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio_populacao
+    OWNER to postgres;
+
+
+-- Table: geodata.municipio_vacina
+
+-- DROP TABLE IF EXISTS geodata.municipio_vacina;
+
+CREATE TABLE IF NOT EXISTS geodata.municipio_vacina
+(
+    ano integer,
+    cobertura real,
+    doses integer,
+    vacina_id integer NOT NULL,
+    municipio_cod_ibge character varying(7) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_municipio_vacina_ref_municipio FOREIGN KEY (municipio_cod_ibge)
+        REFERENCES geodata.municipio (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_municipio_vacina_ref_vacina FOREIGN KEY (vacina_id)
+        REFERENCES geodata.vacina (id_vacina) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.municipio_vacina
+    OWNER to postgres;
+
+
+-- Table: geodata.pais
+
+-- DROP TABLE IF EXISTS geodata.pais;
+
+CREATE TABLE IF NOT EXISTS geodata.pais
+(
+    geom geometry,
+    nome character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT pais_pkey PRIMARY KEY (nome)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.pais
+    OWNER to postgres;
+-- Index: sidx_pais
+
+-- DROP INDEX IF EXISTS geodata.sidx_pais;
+
+CREATE INDEX IF NOT EXISTS sidx_pais
+    ON geodata.pais USING gist
+    (geom)
+    TABLESPACE pg_default;
+
+
+-- Table: geodata.regiao
+
+-- DROP TABLE IF EXISTS geodata.regiao;
+
+CREATE TABLE IF NOT EXISTS geodata.regiao
+(
+    cod_ibge character varying(1) COLLATE pg_catalog."default" NOT NULL,
+    nome character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT pk_regiao PRIMARY KEY (cod_ibge)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.regiao
+    OWNER to postgres;
+
+
+-- Table: geodata.regiao_vacina
+
+-- DROP TABLE IF EXISTS geodata.regiao_vacina;
+
+CREATE TABLE IF NOT EXISTS geodata.regiao_vacina
+(
+    ano integer,
+    vacina_id integer NOT NULL,
+    cobertura real,
+    doses integer,
+    regiao_cod_ibge character varying(1) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT fk_regiao_vacina_ref_regiao FOREIGN KEY (regiao_cod_ibge)
+        REFERENCES geodata.regiao (cod_ibge) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT fk_regiao_vacina_ref_vacina FOREIGN KEY (vacina_id)
+        REFERENCES geodata.vacina (id_vacina) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS geodata.regiao_vacina
+    OWNER to postgres;

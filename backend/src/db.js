@@ -1,9 +1,9 @@
 const db = require('knex')({
     client: 'pg',
     connection: {
-        host: 'localhost',
-        user: 'postgres',
-        password: '03051999',
+        host: '',
+        user: '',
+        password: '',
         database: 'vacinacao',
     },
     searchPath: ['geodata', 'public'],
